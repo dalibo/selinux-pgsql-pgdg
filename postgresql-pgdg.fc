@@ -15,3 +15,8 @@
 /usr/pgsql-[0-9]+.[0-9]+/share/locale(/.*)?		gen_context(system_u:object_r:locale_t,s0)
 /usr/pgsql-[0-9]+.[0-9]+/share/man(/.*)?		gen_context(system_u:object_r:man_t,s0)
 
+#
+# /var
+#
+/var/lib/pgsql/[0-9]+\.[0-9]+/pgstartup\.log.*  gen_context(system_u:object_r:postgresql_log_t,s0)
+/var/lib/pgsql/[0-9]+\.[0-9]+/data/pg_log(/.*)? gen_context(system_u:object_r:postgresql_log_t,s0)
