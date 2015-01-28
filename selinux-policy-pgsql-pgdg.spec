@@ -4,7 +4,7 @@
 
 Name: selinux-policy-pgsql-pgdg
 Version: 1.0.0
-Release: 1
+Release: 2
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
 Group: System Environment/Base
@@ -68,5 +68,7 @@ fi
 %{_datadir}/selinux/*/%{modulename}.pp
 
 %changelog
+* Mon Jan 23 2015 Marcus Berglof <marcus.berglof@gmail.com> 1.0.0-2
+- Added postgresql_log_t for pgstartup.log and pg_log
 * Mon Sep 22 2014 Nicolas Thauvin <nicolas.thauvin@dalibo.com> 1.0.0-1
 - Initial version
