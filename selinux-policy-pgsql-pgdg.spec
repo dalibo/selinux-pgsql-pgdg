@@ -3,7 +3,7 @@
 %global modulename postgresql-pgdg
 
 Name: selinux-policy-pgsql-pgdg
-Version: 1.0.1
+Version: 1.1.0
 Release: 1
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
@@ -68,6 +68,9 @@ fi
 %{_datadir}/selinux/*/%{modulename}.pp
 
 %changelog
+* Mon Oct 23 2017 Nicolas Thauvin <nicolas.thauvin@dalibo.com> 1.1.0-1
+- support PostgreSQL 10
+
 * Mon Jan 28 2015 Nicolas Thauvin <nicolas.thauvin@dalibo.com> 1.0.1-1
 - Follow the selinux module revision bump for proper rpm update
 
