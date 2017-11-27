@@ -17,6 +17,7 @@ Source3: %{modulename}.fc
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: selinux-policy >= %{selinux_policyver}
+Requires: selinux-policy-targeted
 Requires(post):   /usr/sbin/semodule, /sbin/restorecon
 Requires(postun): /usr/sbin/semodule, /sbin/restorecon
 
