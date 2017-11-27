@@ -1,6 +1,7 @@
 %global selinux_variants targeted
 %global selinux_policyver 3.7.19
 %global modulename postgresql-pgdg
+%global relabelpath /usr/pgsql-*/*
 
 Name: selinux-policy-pgsql-pgdg
 Version: 1.1.0
@@ -52,7 +53,9 @@ do
     /usr/sbin/semodule -s ${selinuxvariant} -u \
 	%{_datadir}/selinux/${selinuxvariant}/%{modulename}.pp &> /dev/null || :
 done
-/sbin/restorecon -R /etc/rc.d/init.d/ /usr/pgsql-*/*
+if readlink -e %{relabelpath} &>/dev/null ; then
+  /sbin/restorecon -R /etc/rc.d/init.d/ ${relabelpath} || :
+fi
 
 %postun
 if [ $1 -eq 0 ] ; then
@@ -60,7 +63,9 @@ if [ $1 -eq 0 ] ; then
   do
      /usr/sbin/semodule -s ${selinuxvariant} -r %{modulename} &> /dev/null || :
   done
-  /sbin/restorecon -R /etc/rc.d/init.d/ /usr/pgsql-*/*
+  if readlink -e %{relabelpath} &>/dev/null ; then
+    /sbin/restorecon -R /etc/rc.d/init.d/ ${relabelpath} || :
+  fi
 fi
 
 %files
