@@ -5,7 +5,7 @@
 
 Name: selinux-policy-pgsql-pgdg
 Version: 1.1.0
-Release: 1
+Release: 2
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
 Group: System Environment/Base
@@ -80,6 +80,11 @@ fi
 %doc README.md
 
 %changelog
+* Mon Nov 27 2017 Étienne BERSAC <etienne.bersac@dalibo.com> - 1.1.0-2
+- Build for noarch
+- Add build requires
+- Ship README
+
 * Mon Oct 23 2017 Nicolas Thauvin <nicolas.thauvin@dalibo.com> 1.1.0-1
 - support PostgreSQL 10
 
