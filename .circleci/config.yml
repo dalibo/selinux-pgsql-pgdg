@@ -1,0 +1,32 @@
+version: "2"
+
+.rpm: &rpm
+  working_directory: ~/workspace
+  steps:
+  - run:
+      name: Disable old git
+      command: |
+        git=/usr/bin/git
+        if ${git} --version | grep -q 1.7; then
+            sudo mv ${git} ${git}.disabled
+        fi
+  - checkout
+  - run:
+      name: Build RPM
+      command: ./build_rpm.sh
+
+jobs:
+  centos6:
+    docker: [{image: "rpmbuild/centos6"}]
+    <<: *rpm
+
+  centos7:
+    docker: [{image: "rpmbuild/centos7"}]
+    <<: *rpm
+
+workflows:
+  version: 2
+  pipeline:
+    jobs:
+    - centos6
+    - centos7
