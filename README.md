@@ -13,4 +13,4 @@ local policy.
 
 This is free software distributed under the PostgreSQL license.
 
-Copyright (c) 2014 Dalibo.
+Copyright (c) 2014-2017 Dalibo.
