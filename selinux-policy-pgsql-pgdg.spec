@@ -15,6 +15,8 @@ Source1: %{modulename}.if
 Source2: %{modulename}.te
 Source3: %{modulename}.fc
 BuildArch: noarch
+BuildRequires: make
+BuildRequires: selinux-policy-devel
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: selinux-policy >= %{selinux_policyver}
