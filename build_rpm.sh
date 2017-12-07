@@ -16,7 +16,7 @@ rpmname=selinux-policy-pgsql-pgdg
 srcdir=$(readlink -m $0/..)
 cd $srcdir
 
-chown -R $(id -nu):$(id -ng) selinux* postgresql-pgdg*
+chown -R $(id -nu):$(id -ng) selinux* postgresql-pgdg* README.md
 
 topdir=${PWD}/rpm
 mkdir -p $topdir

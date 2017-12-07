@@ -14,6 +14,8 @@ Url: http://github.com/dalibo/selinux-pgsql-pgdg
 Source1: %{modulename}.if
 Source2: %{modulename}.te
 Source3: %{modulename}.fc
+Source4: README.md
+
 BuildArch: noarch
 BuildRequires: make
 BuildRequires: selinux-policy-devel
@@ -30,7 +32,7 @@ PGDG. This module adds the file contexts needed to confine a
 PostgreSQL cluster.
 
 %prep
-cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} ./
+cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} ./
 
 %build
 for selinuxvariant in %{selinux_variants}
@@ -75,6 +77,7 @@ fi
 %files
 %defattr(-,root,root,0755)
 %{_datadir}/selinux/*/%{modulename}.pp
+%doc README.md
 
 %changelog
 * Mon Oct 23 2017 Nicolas Thauvin <nicolas.thauvin@dalibo.com> 1.1.0-1
