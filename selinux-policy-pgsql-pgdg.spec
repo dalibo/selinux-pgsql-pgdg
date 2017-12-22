@@ -1,10 +1,11 @@
 %global selinux_variants targeted
 %global selinux_policyver 3.7.19
 %global modulename postgresql-pgdg
+%global relabelpath /usr/pgsql-*/*
 
 Name: selinux-policy-pgsql-pgdg
 Version: 1.1.0
-Release: 1
+Release: 2
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
 Group: System Environment/Base
@@ -13,9 +14,15 @@ Url: http://github.com/dalibo/selinux-pgsql-pgdg
 Source1: %{modulename}.if
 Source2: %{modulename}.te
 Source3: %{modulename}.fc
+Source4: README.md
+
+BuildArch: noarch
+BuildRequires: make
+BuildRequires: selinux-policy-devel
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Requires: selinux-policy >= %{selinux_policyver}
+Requires: selinux-policy-targeted
 Requires(post):   /usr/sbin/semodule, /sbin/restorecon
 Requires(postun): /usr/sbin/semodule, /sbin/restorecon
 
@@ -25,7 +32,7 @@ PGDG. This module adds the file contexts needed to confine a
 PostgreSQL cluster.
 
 %prep
-cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} ./
+cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} ./
 
 %build
 for selinuxvariant in %{selinux_variants}
@@ -52,7 +59,9 @@ do
     /usr/sbin/semodule -s ${selinuxvariant} -u \
 	%{_datadir}/selinux/${selinuxvariant}/%{modulename}.pp &> /dev/null || :
 done
-/sbin/restorecon -R /etc/rc.d/init.d/ /usr/pgsql-*/*
+if readlink -e %{relabelpath} &>/dev/null ; then
+  /sbin/restorecon -R /etc/rc.d/init.d/ ${relabelpath} || :
+fi
 
 %postun
 if [ $1 -eq 0 ] ; then
@@ -60,14 +69,22 @@ if [ $1 -eq 0 ] ; then
   do
      /usr/sbin/semodule -s ${selinuxvariant} -r %{modulename} &> /dev/null || :
   done
-  /sbin/restorecon -R /etc/rc.d/init.d/ /usr/pgsql-*/*
+  if readlink -e %{relabelpath} &>/dev/null ; then
+    /sbin/restorecon -R /etc/rc.d/init.d/ ${relabelpath} || :
+  fi
 fi
 
 %files
 %defattr(-,root,root,0755)
 %{_datadir}/selinux/*/%{modulename}.pp
+%doc README.md
 
 %changelog
+* Mon Nov 27 2017 Étienne BERSAC <etienne.bersac@dalibo.com> - 1.1.0-2
+- Build for noarch
+- Add build requires
+- Ship README
+
 * Mon Oct 23 2017 Nicolas Thauvin <nicolas.thauvin@dalibo.com> 1.1.0-1
 - support PostgreSQL 10
 

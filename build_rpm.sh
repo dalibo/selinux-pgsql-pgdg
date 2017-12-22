@@ -1,17 +1,39 @@
-#!/bin/sh
+#!/bin/bash -eux
 
-# clean
-rm $HOME/rpmbuild/BUILD/postgresql-pgdg.*
-rm $HOME/rpmbuild/SRPMS/selinux-policy-pgsql-pgdg-*.src.rpm
-rm $HOME/rpmbuild/RPMS/x86_64/selinux-policy-pgsql-pgdg-*.x86_64.rpm
-rm $HOME/rpmbuild/SOURCES/postgresql-pgdg.{if,te,fc}
+teardown() {
+    exit_code=$?
+    chown -R $(stat -c %u:%g $0) *
 
-# Copy sources
-mkdir -p $HOME/rpmbuild/BUILD
-mkdir -p $HOME/rpmbuild/SOURCES
-for x in if te fc; do
-    cp `dirname $0`/postgresql-pgdg.$x $HOME/rpmbuild/SOURCES
-done
+    # Ease debugging from Docker container by waiting for explicit shutdown.
+    if [ -z "${CI-}" -a $$ -eq 1 -a $exit_code -gt 0 ] ; then
+        tail -f /dev/null
+    fi
+}
 
-# build
-rpmbuild -ba `dirname $0`/selinux-policy-pgsql-pgdg.spec
+trap teardown EXIT INT TERM
+
+rpmname=selinux-policy-pgsql-pgdg
+srcdir=$(readlink -m $0/..)
+cd $srcdir
+
+chown -R $(id -nu):$(id -ng) selinux* postgresql-pgdg* README.md
+
+topdir=${PWD}/rpm
+mkdir -p $topdir
+
+sudo yum install -y rpmlint
+sudo yum-builddep -y $rpmname.spec
+rpmbuild -ba \
+    --define "_topdir ${topdir}" \
+    --define "_sourcedir ${srcdir}" \
+    $rpmname.spec
+
+rpm=rpm/noarch/$rpmname-*.noarch.rpm
+rpmlint $rpm
+
+# Test it
+if rpm -q $rpmname >/dev/null ; then
+    sudo yum remove -y $rpmname
+fi
+sudo yum install -y $rpm
+sudo semodule -l | grep postgresql-pgdg
