@@ -70,7 +70,7 @@ if [ $1 -eq 0 ] ; then
      /usr/sbin/semodule -s ${selinuxvariant} -r %{modulename} &> /dev/null || :
   done
   if readlink -e %{relabelpath} &>/dev/null ; then
-    /sbin/restorecon -R /etc/rc.d/init.d/ ${relabelpath} || :
+    /sbin/restorecon -R /etc/rc.d/init.d/ %{relabelpath} || :
   fi
 fi
 
