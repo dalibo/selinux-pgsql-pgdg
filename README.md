@@ -1,4 +1,4 @@
-SELinux policy module for the PostgreSQL install of the PGDG.
+# SELinux policy module for the PostgreSQL install of the PGDG
 
 This modules adds the file contexts needed by the RPM of PostgreSQL
 provided by the PGDG (e.g. yum.postgresql.org). It requires the
