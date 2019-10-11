@@ -1,3 +1,17 @@
-policy_module(postgresql-pgdg, 1.1.0)
+policy_module(postgresql-pgdg, 1.2.0)
 
-# This modules only provides file contexts for the moment
+require {
+        type postgresql_t;
+}
+
+## <desc>
+##	<p>
+##	Determine whether PostgreSQL can query on HTTP ports.
+##	</p>
+## </desc>
+gen_tunable(postgresql_pgdg_can_http, false)
+
+tunable_policy(`postgresql_pgdg_can_http',`
+    corenet_tcp_connect_http_port(postgresql_t)
+    corenet_tcp_sendrecv_http_port(postgresql_t)
+')

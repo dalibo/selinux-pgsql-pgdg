@@ -11,6 +11,19 @@ It does not force you to enable sepgsql.
 need to allow it to bind to the port by adding a `semanage port` rule to the
 local policy.
 
+## Boolean Provided
+
+This policy provides a `postgresql_pgdg_can_http` similar to `postgresql_can_rsync`
+from refpolicy. When enabled, this boolean allows PostgreSQL to use HTTP ports
+in e.g. `archive_command`, `recovery_end_command`, etc.
+
+``` console
+# setsebool postgresql_pgdg_can_http on
+# getsebool postgresql_pgdg_can_http
+postgresql_pgdg_can_http --> on
+#
+```
+
 This is free software distributed under the PostgreSQL license.
 
-Copyright (c) 2014-2017 Dalibo.
+Copyright (c) 2014-2019 Dalibo.
