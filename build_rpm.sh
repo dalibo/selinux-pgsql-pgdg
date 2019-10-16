@@ -2,6 +2,7 @@
 
 teardown() {
     exit_code=$?
+    trap - EXIT INT TERM
     chown -R $(stat -c %u:%g $0) *
 
     # Ease debugging from Docker container by waiting for explicit shutdown.
