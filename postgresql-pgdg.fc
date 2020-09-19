@@ -10,7 +10,7 @@
 #
 /usr/pgsql-[0-9]+(\.[0-9]+)?/bin/initdb		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
 /usr/pgsql-[0-9]+(\.[0-9]+)?/bin/postgres	--	gen_context(system_u:object_r:postgresql_exec_t,s0)
-/usr/pgsql-[0-9]+(\.[0-9]+)?/bin/pg_ctl		--	gen_context(system_u:object_r:postgresql_initrc_exec_t,s0)
+/usr/pgsql-[0-9]+(\.[0-9]+)?/bin/pg_ctl		--	gen_context(system_u:object_r:postgresql_exec_t,s0)
 
 /usr/pgsql-[0-9]+(\.[0-9]+)?/share/locale(/.*)?		gen_context(system_u:object_r:locale_t,s0)
 /usr/pgsql-[0-9]+(\.[0-9]+)?/share/man(/.*)?		gen_context(system_u:object_r:man_t,s0)
@@ -20,3 +20,9 @@
 #
 /var/lib/pgsql/[0-9]+(\.[0-9]+)?/pgstartup\.log.*	gen_context(system_u:object_r:postgresql_log_t,s0)
 /var/lib/pgsql/[0-9]+(\.[0-9]+)?/data/(pg_)?log(/.*)?	gen_context(system_u:object_r:postgresql_log_t,s0)
+
+#
+# Patroni
+#
+/opt/patroni/bin/patroni			--	gen_context(system_u:object_r:postgresql_exec_t,s0)
+/bin/patroni                                    --      gen_context(system_u:object_r:postgresql_exec_t,s0)
