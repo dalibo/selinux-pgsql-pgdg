@@ -1,4 +1,4 @@
-policy_module(postgresql-pgdg, 1.2.0)
+policy_module(postgresql-pgdg, 1.3.0)
 
 require {
         type postgresql_t;
@@ -14,4 +14,16 @@ gen_tunable(postgresql_pgdg_can_http, false)
 tunable_policy(`postgresql_pgdg_can_http',`
     corenet_tcp_connect_http_port(postgresql_t)
     corenet_tcp_sendrecv_http_port(postgresql_t)
+')
+
+## <desc>
+##      <p>
+##      Allow PostgreSQL/Patroni to access Watchdog devices
+##      </p>
+## </desc>
+gen_tunable(postgresql_pgdg_use_watchdog, false)
+
+tunable_policy(`postgresql_pgdg_use_watchdog',`
+    dev_read_watchdog(postgresql_t)
+    dev_write_watchdog(postgresql_t)
 ')

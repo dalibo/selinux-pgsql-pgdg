@@ -4,7 +4,7 @@
 %global relabelpath /usr/pgsql-*/*
 
 Name: selinux-policy-pgsql-pgdg
-Version: 1.2.0
+Version: 1.3.0
 Release: 1
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
@@ -80,6 +80,9 @@ fi
 %doc README.md
 
 %changelog
+* Sat Sep 19 2020 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.3.0-1
+- Support Patroni
+
 * Fri Oct 11 2019 Étienne BERSAC <etienne.bersac@dalibo.com> - 1.2.0-1
 - Add postgresql_pgdg_can_http boolean.
 
