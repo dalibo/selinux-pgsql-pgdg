@@ -22,14 +22,16 @@ chown -R $(id -nu):$(id -ng) selinux* postgresql-pgdg* README.md
 topdir=${PWD}/rpm
 mkdir -p $topdir
 
+sudo sed -i 's/\.centos//' /etc/rpm/macros.dist
 sudo yum install -y rpmlint
 sudo yum-builddep -y $rpmname.spec
 rpmbuild -ba \
     --define "_topdir ${topdir}" \
     --define "_sourcedir ${srcdir}" \
+    --define "_rpmdir ${topdir}" \
     $rpmname.spec
 
-rpm=rpm/noarch/$rpmname-*.noarch.rpm
+rpm=rpm/noarch/$rpmname-*$(rpm --eval "%{dist}").noarch.rpm
 rpmlint $rpm
 
 # Test it

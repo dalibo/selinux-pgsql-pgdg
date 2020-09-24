@@ -1,4 +1,4 @@
-version: "2"
+version: "3"
 
 services:
   centos7: &centos
@@ -10,3 +10,9 @@ services:
   centos6:
     <<: *centos
     image: rpmbuild/centos6
+
+  centos8:
+    image: dalibo/labs-sdk:centos8
+    volumes:
+    - .:/workspace
+    entrypoint: /workspace/build_rpm.sh
