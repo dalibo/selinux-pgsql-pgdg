@@ -5,7 +5,7 @@
 
 Name: selinux-policy-pgsql-pgdg
 Version: 1.3.1
-Release: 1
+Release: 1%{dist}
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
 Group: System Environment/Base
