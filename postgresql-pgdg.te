@@ -1,4 +1,4 @@
-policy_module(postgresql-pgdg, 1.3.1)
+policy_module(postgresql-pgdg, 1.4.0)
 
 require {
         type postgresql_t;
@@ -26,4 +26,17 @@ gen_tunable(postgresql_pgdg_use_watchdog, false)
 tunable_policy(`postgresql_pgdg_use_watchdog',`
     dev_read_watchdog(postgresql_t)
     dev_write_watchdog(postgresql_t)
+')
+
+## <desc>
+##     <p>
+##     Allow PostgreSQL to use NFS filesystems
+##     </p>
+## </desc>
+gen_tunable(postgresql_pgdg_use_nfs, false)
+
+tunable_policy(`postgresql_pgdg_use_nfs',`
+    fs_manage_nfs_dirs(postgresql_t)
+    fs_manage_nfs_files(postgresql_t)
+    fs_manage_nfs_symlinks(postgresql_t)
 ')

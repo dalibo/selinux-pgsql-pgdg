@@ -4,7 +4,7 @@
 %global relabelpath /usr/pgsql-*/*
 
 Name: selinux-policy-pgsql-pgdg
-Version: 1.3.1
+Version: 1.4.0
 Release: 1%{dist}
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
@@ -80,6 +80,9 @@ fi
 %doc README.md
 
 %changelog
+* Fri Oct 30 2020 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.4.0-1
+- Allow to use NFS
+
 * Mon Sep 21 2020 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.3.1-1
 - Fix path of patroni executable
 
