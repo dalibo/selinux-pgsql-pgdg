@@ -40,3 +40,6 @@ tunable_policy(`postgresql_pgdg_use_nfs',`
     fs_manage_nfs_files(postgresql_t)
     fs_manage_nfs_symlinks(postgresql_t)
 ')
+
+files_read_all_symlinks(postgresql_t)
+libs_exec_ldconfig(postgresql_t)
