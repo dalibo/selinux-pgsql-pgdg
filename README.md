@@ -38,6 +38,23 @@ postgresql_pgdg_use_watchdog --> on
 #
 ```
 
+When we want to archive WAL segments on mount NFS filesystem, access
+can be granted with the `postgresql_pgdg_use_nfs` boolean:
+
+``` console
+# setsebool postgresql_pgdg_use_nfs on
+# getsebool postgresql_pgdg_use_nfs
+postgresql_pgdg_use_nfs --> on
+#
+```
+
+Permanent access shall be granted by setting boolean to on with the
+`semanage boolean` command:
+
+``` console
+# semanage boolean -m --on <boolean>
+```
+
 ## Notes
 
 When running the postmaster on a TCP port different than 5432, you
