@@ -4,7 +4,7 @@
 %global relabelpath /usr/pgsql-*/*
 
 Name: selinux-policy-pgsql-pgdg
-Version: 1.4.0
+Version: 1.4.1
 Release: 1%{dist}
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
@@ -59,9 +59,7 @@ do
     /usr/sbin/semodule -s ${selinuxvariant} -u \
 	%{_datadir}/selinux/${selinuxvariant}/%{modulename}.pp &> /dev/null || :
 done
-if readlink -e %{relabelpath} &>/dev/null ; then
-  /sbin/restorecon -R /etc/rc.d/init.d/ ${relabelpath} || :
-fi
+/sbin/restorecon -R ${relabelpath} || :
 
 %postun
 if [ $1 -eq 0 ] ; then
@@ -69,9 +67,7 @@ if [ $1 -eq 0 ] ; then
   do
      /usr/sbin/semodule -s ${selinuxvariant} -r %{modulename} &> /dev/null || :
   done
-  if readlink -e %{relabelpath} &>/dev/null ; then
-    /sbin/restorecon -R /etc/rc.d/init.d/ %{relabelpath} || :
-  fi
+  /sbin/restorecon -R %{relabelpath} || :
 fi
 
 %files
@@ -80,6 +76,9 @@ fi
 %doc README.md
 
 %changelog
+* Mon Dec 14 2020 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.4.1-1
+- Fix restorecon at install and uninstall
+
 * Fri Oct 30 2020 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.4.0-1
 - Allow to use NFS
 
