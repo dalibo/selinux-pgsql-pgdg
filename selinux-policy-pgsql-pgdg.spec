@@ -4,7 +4,7 @@
 %global relabelpath /usr/pgsql-*/*
 
 Name: selinux-policy-pgsql-pgdg
-Version: 1.4.1
+Version: 1.5.0
 Release: 1%{dist}
 Summary: SELinux policy module for PostgreSQL from the PGDG
 License: PostgreSQL
@@ -76,6 +76,9 @@ fi
 %doc README.md
 
 %changelog
+* Tue Jan 26 2021 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.5.0-1
+- Allow to use FUSE filesystems
+
 * Mon Dec 14 2020 Nicolas Thauvin <nicolas.thauvin@dalibo.com> - 1.4.1-1
 - Fix restorecon at install and uninstall
 

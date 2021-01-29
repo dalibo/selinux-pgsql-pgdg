@@ -1,4 +1,4 @@
-policy_module(postgresql-pgdg, 1.4.1)
+policy_module(postgresql-pgdg, 1.5.0)
 
 require {
         type postgresql_t;
@@ -41,5 +41,18 @@ tunable_policy(`postgresql_pgdg_use_nfs',`
     fs_manage_nfs_symlinks(postgresql_t)
 ')
 
+## <desc>
+##     <p>
+##     Allow PostgreSQL to use FUSE filesystems
+##     </p>
+## </desc>
+gen_tunable(postgresql_pgdg_use_fusefs, false)
+
+tunable_policy(`postgresql_pgdg_use_fusefs',`
+    fs_manage_fusefs_dirs(postgresql_t)
+    fs_manage_fusefs_files(postgresql_t)
+')
+
 files_read_all_symlinks(postgresql_t)
 libs_exec_ldconfig(postgresql_t)
+
